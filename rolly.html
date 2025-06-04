@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Demo Page</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Alpine.js for navbar toggle -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-0 m-0">
+
+  <!-- NAVBAR -->
+  <nav x-data="{ open: false }" class="w-full fixed top-0 left-0 z-50 bg-white bg-opacity-10 backdrop-blur-lg shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-xl font-bold tracking-wide text-white" id="logo">✨ My Demo</div>
+
+      <!-- Hamburger Menu Button -->
+      <button @click="open = !open" class="md:hidden text-white focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path :class="{ 'hidden': open }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"/>
+          <path :class="{ 'hidden': !open }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Desktop Links -->
+      <ul class="hidden md:flex space-x-6 text-lg font-medium text-white">
+        <li><a href="#home" class="hover:text-yellow-400 transition">Home</a></li>
+        <li><a href="#about" class="hover:text-yellow-400 transition">About</a></li>
+        <li><a href="#services" class="hover:text-yellow-400 transition">Services</a></li>
+        <li><a href="#contact" class="hover:text-yellow-400 transition">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Mobile Links -->
+    <div x-show="open" class="md:hidden px-6 pb-4 space-y-2 text-white text-lg">
+      <a href="#home" class="block hover:text-yellow-400">Home</a>
+      <a href="#about" class="block hover:text-yellow-400">About</a>
+      <a href="#services" class="block hover:text-yellow-400">Services</a>
+      <a href="#contact" class="block hover:text-yellow-400">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Spacer below fixed navbar -->
+  <div class="h-24"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex flex-col items-center justify-center p-6 space-y-10">
+
+    <header class="text-center space-y-4" id="home">
+      <h1 class="text-5xl font-bold drop-shadow-lg" id="main-heading">Welcome to My Demo Page</h1>
+      <p class="text-lg text-gray-200 max-w-xl mx-auto">This is a simple HTML document transformed into a stunning, animated, and responsive experience.</p>
+    </header>
+
+    <section class="w-full max-w-md" id="services">
+      <ul class="bg-white bg-opacity-10 rounded-xl p-6 space-y-4 text-lg backdrop-blur-md shadow-lg">
+        <li class="hover:bg-white hover:text-black px-4 py-2 rounded transition duration-300">🌟 Item 1</li>
+        <li class="hover:bg-white hover:text-black px-4 py-2 rounded transition duration-300">🚀 Item 2</li>
+        <li class="hover:bg-white hover:text-black px-4 py-2 rounded transition duration-300">🔥 Item 3</li>
+      </ul>
+    </section>
+
+    <footer class="text-center mt-10 text-sm text-gray-300" id="contact">
+      <p>Feel free to explore and modify this template!</p>
+    </footer>
+  </main>
+
+  <!-- GSAP Animation Script -->
+  <script>
+    // Navbar animation
+    gsap.from("#logo", {
+      duration: 1,
+      y: -40,
+      opacity: 0,
+      ease: "power2.out"
+    });
+
+    gsap.utils.toArray("nav ul li").forEach((item, i) => {
+      gsap.from(item, {
+        delay: 0.3 + i * 0.1,
+        y: -20,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+    });
+
+    // Main heading animation
+    gsap.from("#main-heading", {
+      duration: 1.2,
+      y: -50,
+      opacity: 0,
+      ease: "power3.out"
+    });
+
+    // List item scroll animation
+    gsap.utils.toArray("li").forEach((item, i) => {
+      gsap.from(item, {
+        scrollTrigger: item,
+        y: 30,
+        opacity: 0,
+        duration: 0.5,
+        delay: i * 0.1,
+        ease: "power2.out"
+      });
+    });
+  </script>
+
+</body>
+</html>
